@@ -48,9 +48,7 @@ public class CamRender : MonoBehaviour
             wrapper = player.Get<AndroidJavaObject>("p"); // Camera2Wrapper
             var b = wrapper.Get<AndroidJavaObject>("b");
             var builder = b.Get<AndroidJavaObject>("t"); // CaptureRequest.Builder
-            Debug.Log("builder: " + (builder == null));
             var camMgr = b.GetStatic<AndroidJavaObject>("b"); // CameraManager
-            Debug.Log("camMgr: " + (camMgr == null));
             if (camMgr != null && builder != null)
             {
                 pl_class = new AndroidJavaClass("com.yun.webCam.Camera2Test");
