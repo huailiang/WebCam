@@ -1,0 +1,11 @@
+Library/
+Temp/
+obj/
+.idea/
+.vs/
+Logs/
+*sln
+*.csproj
+**/.DS_Store
+*.apk
+android/WebCam/build/
