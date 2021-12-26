@@ -9,9 +9,7 @@
 https://www.bilibili.com/video/BV13R4y137e9?share_source=copy_web
 
 
-<center>
-<iframe src="//player.bilibili.com/player.html?bvid=BV13R4y137e9&cid=469323842&page=1&share_source=copy_web"  width="500" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-</center><br>
+
 
 
 ### Unity访问camera2
