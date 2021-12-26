@@ -1,6 +1,6 @@
 
 
->获取物理相机的预览流是AR开发的基础能力， 在 ARFoundation 和 AREngine 都是使用 CommandBuffer 来绘制预览流。 如果使用WebCameraTexture获取的预览流受限制比较多， 比如说去调整变焦、曝光度这些东西更多的还是去原生层去拿。 
+>获取物理相机的预览流是AR开发的基础能力， 在 ARFoundation 和 AREngine 都是使用 CommandBuffer 来绘制预览流。 如果使用WebCameraTexture获取的预览流受限制比较多， 比如说去调整变焦(ZoomRatio)、 曝光补偿（[AE][i2]）、相机感光度（[ISO][i5])、快门/曝光时间等。 这些参数更多的还是去原生层去拿， 而Camera2里的CameraCharacteristics 提供了一个便捷的接口去访问这些数据。
 
 
 
@@ -35,3 +35,10 @@ if (camMgr != null && builder != null)
 }
 ```
 
+
+[i1]: https://www.jianshu.com/p/9a2e66916fcb
+[I2]: https://baike.baidu.com/item/AE模式
+[i3]: https://forum.unity.com/threads/webcamtexture-on-android-focus-mode-fix.327956/
+[i4]: https://github.com/huailiang/WebCam
+[i5]: https://baike.baidu.com/item/iso/5397601#viewPageContent
+[i6]: https://blog.csdn.net/qq_293
