@@ -4,6 +4,15 @@
 
 
 
+效果视频地址：
+
+https://www.bilibili.com/video/BV13R4y137e9?share_source=copy_web
+
+
+<center>
+<iframe src="//player.bilibili.com/player.html?bvid=BV13R4y137e9&cid=469323842&page=1&share_source=copy_web"  width="500" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+</center><br>
+
 
 ### Unity访问camera2
 
@@ -28,65 +37,3 @@ if (camMgr != null && builder != null)
 }
 ```
 
-作者就是这样拿到 CameraManager 和 CaptureRequest.Builder 的， 拿到之后传递到Camera2Test这个自己实现的类中， 然后就这可以做各种效果了。Camera2Test.java 类实现：
-
-
-```java
-public static void SetMgrAndCharacteristics(CameraManager mgr, CaptureRequest.Builder b, String name)
-{
-    Log.d(TAG, "SetMgrAndCharacteristics: " + (b == null));
-    mCameraManager = mgr;
-    mPreviewRequestBuilder = b;
-    try {
-        mCameraCharacteristics = mCameraManager.getCameraCharacteristics(name);
-        Zoom(mCameraCharacteristics);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-
-private static void Zoom(final CameraCharacteristics characteristics)
-{
-    mSensorSize = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
-    if (mSensorSize == null) {
-        maxZoom = DEFAULT_ZOOM_FACTOR;
-        hasSupport = false;
-        Log.e(TAG, "NOT SUPPORT");
-        return;
-    }
-
-    final Float value = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
-    maxZoom = ((value == null) || (value < DEFAULT_ZOOM_FACTOR)) ? DEFAULT_ZOOM_FACTOR : value;
-    hasSupport = (Float.compare(maxZoom, DEFAULT_ZOOM_FACTOR) > 0);
-    Log.d(TAG, "maxZoom: " + maxZoom + " default:" + DEFAULT_ZOOM_FACTOR + "  hasSupport: " + hasSupport);
-}
-
-
-public static void SetZoom(float newZoom)
-{
-    if (!hasSupport) return;
-
-    if (newZoom < DEFAULT_ZOOM_FACTOR) newZoom = DEFAULT_ZOOM_FACTOR;
-    if (newZoom > maxZoom) newZoom = maxZoom;
-    mCurrentZoomFactor = newZoom;
-    final int centerX = mSensorSize.width() / 2;
-    final int centerY = mSensorSize.height() / 2;
-    final int deltaX = (int) ((0.5f * mSensorSize.width()) / mCurrentZoomFactor);
-    final int deltaY = (int) ((0.5f * mSensorSize.height()) / mCurrentZoomFactor);
-    mCropRegion.set(centerX - deltaX,
-            centerY - deltaY,
-            centerX + deltaX,
-            centerY + deltaY);
-
-    mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, mCropRegion);
-    Log.d(TAG, "SetZoom: " + mCurrentZoomFactor + "  rect: " + mCropRegion);
-}
-```
-
-
-大致思路就是如此了， 需要注意的是 逆向 classes.jar, 每个版本的unity里的变量名都是一致的， 最好还是去安装包去看下实际的变量名， 然后在获取传递到原生层去。 项目的代码我已经上传到 [github][i4]了。
-
-
-[i1]: https://www.jianshu.com/p/9a2e66916fcb
-[i3]: https://forum.unity.com/threads/webcamtexture-on-android-focus-mode-fix.327956/
-[i4]: https://github.com/huailiang/WebCam
