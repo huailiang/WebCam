@@ -69,9 +69,6 @@ public class CamRender : MonoBehaviour
 
     private void SetZoom(float v)
     {
-        // webCamTexture.Pause();
-        // cameraClass.CallStatic("SetZoom", 8.0f * v);
-        // webCamTexture.Play();
         SetCameraCharacteristics("SetZoom", v);
     }
 

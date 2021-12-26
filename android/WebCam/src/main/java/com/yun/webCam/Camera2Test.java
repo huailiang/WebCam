@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.util.Log;
 import android.util.Range;
@@ -65,6 +66,7 @@ public class Camera2Test
         int time = 100 / all;
         int ae = ((i / time) - max) > max ? max : Math.max(((i / time) - max), min);
         Log.d(TAG, "AE: " + ae + " min: " + min + " max: " + max);
+        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
         mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, ae);
     }
 
@@ -80,7 +82,9 @@ public class Camera2Test
         int max = range.getUpper();
         int min = range.getLower();
         int iso = ((i * (max - min)) / 100 + min);
+        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_OFF);
         mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, iso);
+        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME,(long)3000);
     }
 
 
@@ -93,6 +97,7 @@ public class Camera2Test
     {
         float minimumLens = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
         float num = (((float) i) * minimumLens / 100);
+        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);
         mPreviewRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, num);
     }
 
